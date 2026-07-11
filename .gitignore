@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local design source archive (assets already copied to public/assets)
+Yearbook Website Conversion/

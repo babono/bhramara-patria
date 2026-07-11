@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bhramara Patria · PK-236
 
-## Getting Started
+Situs angkatan PK-236 LPDP "Bhramara Patria" — Next.js (App Router) dengan Notion sebagai CMS.
 
-First, run the development server:
+Halaman: **Beranda** (`/`), **Tentang** (`/tentang`), **Awardee** (`/awardee`, direktori dengan pencarian & filter), **Blog** (`/blog` + `/blog/[slug]`), **Tools** (`/tools`), **Kontak** (`/kontak`).
+
+## Menjalankan
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000). Tanpa konfigurasi apa pun, situs berjalan dengan **data contoh bawaan** (dari desain asli). Setelah Notion dikonfigurasi, konten diambil dari Notion dan di-cache 5 menit (ISR).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Setup Notion
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Buat integration
 
-## Learn More
+1. Buka [notion.so/my-integrations](https://www.notion.so/my-integrations) → **New integration** (Internal).
+2. Salin **Internal Integration Secret** → ini `NOTION_TOKEN`.
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Buat 3 database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Buat database (full-page) dengan properti berikut. Nama properti fleksibel terhadap kapitalisasi; alternatif bahasa Indonesia di kolom kanan juga dikenali.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Awardees** (`NOTION_AWARDEES_DB_ID`)
 
-## Deploy on Vercel
+| Properti     | Tipe      | Nilai / alternatif                              |
+| ------------ | --------- | ----------------------------------------------- |
+| `Name`       | Title     | Nama lengkap                                    |
+| `Nickname`   | Rich text | alt: `Panggilan`                                |
+| `University` | Rich text | alt: `Universitas`, `Kampus`                    |
+| `Program`    | Rich text | alt: `Program Studi`, `Prodi`                   |
+| `Jenjang`    | Select    | `S2` / `S3` (alt: `Degree`)                     |
+| `Lokasi`     | Select    | `Dalam Negeri` / `Luar Negeri` (alt: `Location`) |
+| `Kelompok`   | Select    | mis. `Cendana`, `Arum Dalu` (alt: `Group`)      |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Blog** (`NOTION_BLOG_DB_ID`) — isi artikel ditulis langsung di body halaman Notion (paragraf, heading, list, quote, gambar, kode — semuanya dirender).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Properti      | Tipe      | Keterangan                                        |
+| ------------- | --------- | ------------------------------------------------- |
+| `Title`       | Title     | Judul artikel                                     |
+| `Slug`        | Rich text | Opsional — dibuat otomatis dari judul jika kosong |
+| `Excerpt`     | Rich text | Ringkasan singkat (alt: `Ringkasan`)              |
+| `Category`    | Select    | mis. `Refleksi`, `Tips Beasiswa` (alt: `Kategori`) |
+| `Author`      | Rich text | Nama penulis (alt: `Penulis`)                     |
+| `AuthorInfo`  | Rich text | mis. kampus penulis (alt: `Kampus`)               |
+| `Date`        | Date      | Tanggal terbit (alt: `Tanggal`)                   |
+| `ReadingTime` | Number    | Menit baca (default 5)                            |
+| `Featured`    | Checkbox  | Tampil sebagai "Cerita Utama" (alt: `Unggulan`)   |
+| `Published`   | Checkbox  | Hanya yang tercentang yang tampil (alt: `Terbit`) |
+
+**Tools** (`NOTION_TOOLS_DB_ID`)
+
+| Properti   | Tipe      | Keterangan                                                                              |
+| ---------- | --------- | ---------------------------------------------------------------------------------------- |
+| `Name`     | Title     | Judul tautan                                                                              |
+| `Section`  | Select    | `Panduan LPDP` / `Template Dokumen` / `Tautan Penting` / `Komunitas Angkatan`             |
+| `URL`      | URL       | Tautan tujuan (path internal seperti `/awardee` juga bisa)                                |
+| `LinkType` | Select    | `download` (↓) / `internal` (→) / `external` (↗)                                          |
+| `Order`    | Number    | Urutan tampil dalam seksi                                                                 |
+
+### 3. Hubungkan database ke integration
+
+Di setiap database: menu `···` → **Connections** → pilih integration kamu. (Tanpa langkah ini API akan menjawab 404.)
+
+### 4. Isi environment variables
+
+```bash
+cp .env.example .env.local
+```
+
+```env
+NOTION_TOKEN=secret_xxx
+NOTION_AWARDEES_DB_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NOTION_BLOG_DB_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+NOTION_TOOLS_DB_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+```
+
+Database ID = 32 karakter hex pada URL database (`notion.so/workspace/<ID>?v=...`). Saat deploy (mis. Vercel), set keempat variabel yang sama di dashboard environment variables.
+
+## Catatan
+
+- Konten Notion di-cache 5 menit (`REVALIDATE_SECONDS` di `lib/notion.ts`).
+- Jika Notion tidak terkonfigurasi/error, situs otomatis memakai data contoh (lihat `FALLBACK_*` di `lib/notion.ts`) — tidak pernah blank.
+- Aset desain (maskot Ara, batik, dsb.) ada di `public/assets/`; sumber desain asli di folder `Yearbook Website Conversion/`.
