@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
+import WelcomeGate from "@/components/WelcomeGate";
 
 const bricolage = Bricolage_Grotesque({
   variable: "--font-bricolage",
@@ -28,7 +29,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" className={`${bricolage.variable} ${jakarta.variable}`}>
-      <body>{children}</body>
+      <body>
+        <WelcomeGate />
+        {children}
+      </body>
     </html>
   );
 }
