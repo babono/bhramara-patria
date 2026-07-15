@@ -10,9 +10,8 @@ export default function SiteFooter({ variant = "compact" }: { variant?: "full" |
         <div className="shell" style={{ padding: "56px 56px 34px", color: "rgba(251,239,216,.75)" }}>
           <div className="footer-grid" style={{ gap: 40, paddingBottom: 34, borderBottom: "1px solid rgba(251,239,216,.14)" }}>
             <div>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                <Image src="/assets/flower-white.png" alt="" width={230} height={215} style={{ height: 30, width: "auto" }} />
-                <div className="font-display" style={{ fontWeight: 800, fontSize: 18, color: "#FBEFD8" }}>Bhramara Patria</div>
+              <div style={{ marginBottom: 18 }}>
+                <Image src="/assets/logo-bhramara-patria-white.png" alt="PK-236 Bhramara Patria" width={2084} height={1250} style={{ height: 88, width: "auto", display: "block" }} />
               </div>
               <p style={{ fontSize: 14, lineHeight: 1.6, maxWidth: 300, margin: 0, fontStyle: "italic", color: "rgba(251,239,216,.7)" }}>
                 &ldquo;Lentera Harapan, Menyinari Jalan Pengabdian.&rdquo;
@@ -52,10 +51,7 @@ export default function SiteFooter({ variant = "compact" }: { variant?: "full" |
     <div style={{ background: "#4A1D22" }}>
       <div className="shell" style={{ padding: "48px 56px 32px", color: "rgba(251,239,216,.72)" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 18, paddingBottom: 26, borderBottom: "1px solid rgba(251,239,216,.14)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <Image src="/assets/flower-white.png" alt="" width={230} height={215} style={{ height: 28, width: "auto" }} />
-            <div className="font-display" style={{ fontWeight: 800, fontSize: 17, color: "#FBEFD8" }}>Bhramara Patria</div>
-          </div>
+          <Image src="/assets/logo-bhramara-patria-white.png" alt="PK-236 Bhramara Patria" width={2084} height={1250} style={{ height: 72, width: "auto", display: "block" }} />
           <div style={{ display: "flex", gap: 26, fontSize: 14, flexWrap: "wrap" }}>
             <Link href="/" style={{ color: "rgba(251,239,216,.78)", textDecoration: "none" }}>Beranda</Link>
             <Link href="/tentang" style={{ color: "rgba(251,239,216,.78)", textDecoration: "none" }}>Tentang</Link>

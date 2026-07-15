@@ -18,13 +18,11 @@ export default function SiteHeader({ active }: { active: string }) {
 
   return (
     <div className="shell" style={{ position: "relative" }}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "22px 0" }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
-          <Image src="/assets/flower-white.png" alt="" width={230} height={215} style={{ height: 30, width: "auto", display: "block" }} />
-          <div style={{ lineHeight: 1.05 }}>
-            <div className="font-display" style={{ fontWeight: 800, fontSize: 18, color: "#FBEFD8" }}>Bhramara Patria</div>
-            <div style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: ".22em", color: "#E9A93C" }}>ANGKATAN PK&#8209;236</div>
-          </div>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 0" }}>
+        <Link href="/" aria-label="Bhramara Patria — Beranda" style={{ display: "inline-flex", textDecoration: "none" }}>
+          <span style={{ display: "inline-flex", background: "#FFFFFF", padding: "9px 22px", borderRadius: 999, border: "1px solid rgba(233,169,60,.3)", boxShadow: "0 8px 20px rgba(0,0,0,.18)" }}>
+            <Image src="/assets/logo-bhramara.png" alt="PK-236 Bhramara Patria" width={556} height={215} style={{ height: 44, width: "auto", display: "block" }} />
+          </span>
         </Link>
         <nav className="site-nav" style={{ display: "flex", alignItems: "center", gap: 30 }}>
           {NAV.map((item) =>
