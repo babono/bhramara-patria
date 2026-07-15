@@ -78,7 +78,7 @@ export default function WelcomeGate() {
   // Load + parse the .lrc once.
   useEffect(() => {
     let alive = true;
-    fetch(LRC_SRC)
+    fetch(LRC_SRC, { cache: "no-store" })
       .then((r) => (r.ok ? r.text() : ""))
       .then((t) => {
         if (!alive) return;
