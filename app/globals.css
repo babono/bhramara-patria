@@ -16,8 +16,8 @@
   --ink: #2a211e;
   --ink-soft: #5c4a42;
   --ink-muted: #6b5a50;
-  --font-display: var(--font-bricolage), sans-serif;
-  --font-body: var(--font-jakarta), sans-serif;
+  --font-display: var(--font-display-face), "Bricolage Grotesque", sans-serif;
+  --font-body: var(--font-body-face), "Plus Jakarta Sans", sans-serif;
 }
 
 body {

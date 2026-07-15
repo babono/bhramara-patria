@@ -1,16 +1,28 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Plus_Jakarta_Sans } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import WelcomeGate from "@/components/WelcomeGate";
 
-const bricolage = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin"],
+// Display face — Dream Orphans (titles, headings)
+const dreamOrphans = localFont({
+  variable: "--font-display-face",
+  display: "swap",
+  src: [
+    { path: "../public/fonts/Dream Orphans.otf", weight: "400", style: "normal" },
+    { path: "../public/fonts/Dream Orphans It.otf", weight: "400", style: "italic" },
+    { path: "../public/fonts/Dream Orphans Bd.otf", weight: "700", style: "normal" },
+    { path: "../public/fonts/Dream Orphans Bd It.otf", weight: "700", style: "italic" },
+  ],
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
+// Body face — Futura (content text)
+const futura = localFont({
+  variable: "--font-body-face",
+  display: "swap",
+  src: [
+    { path: "../public/fonts/Futura Regular.ttf", weight: "400", style: "normal" },
+    { path: "../public/fonts/Futura Bold.otf", weight: "700", style: "normal" },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -28,7 +40,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${bricolage.variable} ${jakarta.variable}`}>
+    <html lang="id" className={`${dreamOrphans.variable} ${futura.variable}`}>
       <body>
         <WelcomeGate />
         {children}
